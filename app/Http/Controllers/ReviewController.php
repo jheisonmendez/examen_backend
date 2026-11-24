@@ -23,7 +23,7 @@ class ReviewController extends Controller
         $revision = Review::create($request->all());
         return response()->json($revision);
     }
-    public function update(Request $request, $id){
+    public function update(Request $request, Review $revision){
         $request->validate([
             "codigo" => "required|string|max:255",
             "aceite" => "required|boolean",
@@ -32,12 +32,10 @@ class ReviewController extends Controller
             'car_id' => 'required|integer|exists:cars,id',
             
         ]);
-        $revision = Review::find($id);
-        $revision->update($request->all());
+        $revision->update($request->only(["codigo", "aceite", "filtro", "frenos", "car_id"]));
         return response()->json($revision);
     }
-    public function show($id){
-        $revision=Review::find($id);
+    public function show(Review $revision){
         return response()->json($revision);
     }
     public function destroy(Review $revision){

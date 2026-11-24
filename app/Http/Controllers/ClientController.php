@@ -12,26 +12,32 @@ class ClientController extends Controller
         return response()->json($clientes);
     }
     public function store(Request $request){
-        $request->validate([
+        $validated = $request->validate([
             "cedula" => "required|string|max:255",
             "direccion" => "required|string|max:255",
             "telefono" => "required|string|max:255",
         ]);
-        $cliente = Client::create($request->all());
+        $cliente = Client::create([
+            "cedula" => $validated["cedula"],
+            "direccion" => $validated["direccion"],
+            "telefono" => $validated["telefono"],
+        ]);
         return response()->json($cliente);
     }
-    public function update(Request $request, $id){
-        $request->validate([
+    public function update(Request $request, Client $cliente){
+        $validated = $request->validate([
             "cedula" => "required|string|max:255",
             "direccion" => "required|string|max:255",
             "telefono" => "required|string|max:255",
         ]);
-        $cliente = Client::find($id);
-        $cliente->update($request->all());
+        $cliente->update([
+            "cedula" => $validated["cedula"],
+            "direccion" => $validated["direccion"],
+            "telefono" => $validated["telefono"],
+        ]);
         return response()->json($cliente);
     }
-    public function show($id){
-        $cliente=Client::find($id);
+    public function show(Client $cliente){
         return response()->json($cliente);
     }
     public function destroy(Client $cliente){

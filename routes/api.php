@@ -20,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::apiResource('cliente',ClientController::class);
-Route::apiResource('coche',CarController::class);
-Route::apiResource('revision',ReviewController::class);
+Route::apiResource('cliente', ClientController::class)->except(['update']);
+Route::put('cliente/{cliente}', [ClientController::class, 'update'])->name('cliente.update');
+
+Route::apiResource('coche', CarController::class)->except(['update']);
+Route::put('coche/{coche}', [CarController::class, 'update'])->name('coche.update');
+
+Route::apiResource('revision', ReviewController::class)->except(['update']);
+Route::put('revision/{revision}', [ReviewController::class, 'update'])->name('revision.update');

@@ -103,8 +103,8 @@ class CarController extends Controller
         'message' => 'Elemento actualizado correctamente',
         'data' => $coche
     ]);
-    }public function show($id){
-        $coche=Car::find($id);
+    }
+    public function show(Car $coche){
         return response()->json($coche);
     }
     public function destroy(Car $coche){
